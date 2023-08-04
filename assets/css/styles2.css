@@ -1,0 +1,17 @@
+#craftmartconvert{
+    color: #bb7601;
+}
+
+#flexCheckChecked{
+    color: #bb7601;
+}
+
+.text-primary {
+    --bs-text-opacity: 1;
+        color: #bb7601;
+  }
+
+.form-check-input:checked {
+    background-color: #bb7601;
+    border-color: #bb7601;
+  }
