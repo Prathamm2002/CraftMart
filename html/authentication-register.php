@@ -1,3 +1,25 @@
+<?php
+require_once '../database.php'; // Change to the actual filename where your User class is defined
+
+if ($_SERVER["REQUEST_METHOD"] === "POST") {
+    $name = $_POST["name"];
+    $email = $_POST["email"];
+    $password = $_POST["password"];
+
+    // Create a new User instance
+    $user = new User();
+
+    // Save user data to the database
+    $result = $user->save($name, $email, $password);
+
+    if ($result) {
+        echo "User registration successful!";
+    } else {
+        echo "Error: " . $user->error;
+    }
+}
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -24,23 +46,23 @@
                   <img src="../img/craftmartlogo.png" width="200" alt="">
                 </a>
                 <p class="text-center">Your Social Campaigns</p>
-                <form>
+                <form method="POST">
                   <div class="mb-3">
-                    <label for="exampleInputtext1" class="form-label">Name</label>
-                    <input type="text" class="form-control" id="exampleInputtext1" aria-describedby="textHelp">
+                    <label for="name" class="form-label">Name</label>
+                    <input type="text" class="form-control" id="name" name="name" aria-describedby="textHelp">
                   </div>
                   <div class="mb-3">
-                    <label for="exampleInputEmail1" class="form-label">Email Address</label>
-                    <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                    <label for="email" class="form-label">Email Address</label>
+                    <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
                   </div>
                   <div class="mb-4">
-                    <label for="exampleInputPassword1" class="form-label">Password</label>
-                    <input type="password" class="form-control" id="exampleInputPassword1">
+                    <label for="password" class="form-label">Password</label>
+                    <input type="password" class="form-control" name="password" id="password">
                   </div>
-                  <a href="./index.php" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2" style = "color: #ffffff; background-color: #bb7601; border-color: #bb7601;">Sign Up</a>
+                  <input type="submit" value="Register">
                   <div class="d-flex align-items-center justify-content-center">
                     <p class="fs-4 mb-0 fw-bold">Already have an Account?</p>
-                    <a class="text-primary fw-bold ms-2" href="./authentication-login.html">Sign In</a>
+                    <a class="text-primary fw-bold ms-2" href="./authentication-login.php">Sign In</a>
                   </div>
                 </form>
               </div>

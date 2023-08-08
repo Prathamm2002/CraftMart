@@ -1,3 +1,29 @@
+<?php
+// (A) PROCESS LOGIN
+// (A1) ALREADY SIGNED IN
+// if (isset($_COOKIE["jwt"])) {
+//   require "../database.php";
+//   $user = $_USER->validate($_COOKIE["jwt"]);
+//   if ($user===false) { setcookie("jwt", null, -1); }
+//   else { header("Location: index.php"); exit(); }
+// }
+
+// (A2) PROCESS SIGN IN
+if (isset($_POST["email"]) && isset($_POST["password"])) {
+  require "../database.php";
+  $jwt = $_USER->login($_POST["email"], $_POST["password"]);
+  if ($jwt!==false) {
+    setcookie("jwt", $jwt);
+    header("Location: index.php");
+    exit();
+  }
+} ?>
+<!-- (B) MESSAGE -->
+<?php if (isset($jwt)) { ?>
+<div class="note"><?=$_USER->error?></div>
+<?php } ?>
+ 
+
 <!doctype html>
 <html lang="en">
 
@@ -11,11 +37,11 @@
 
 </head>
 
-
+<!-- 
 <div class="dark-mode-toggle">
   <label for="darkModeToggle">Dark Mode</label>
   <input type="checkbox" id="darkModeToggle">
-</div>
+</div> -->
 
 
 <body>
@@ -34,28 +60,28 @@
             </a>
             <p class="text-center">Your Social Campaigns</p>
             <div class="dark-mode-wrapper">
-            <form>
+            <form method="POST">
               <div class="mb-3">
-                <label for="exampleInputEmail1" class="form-label">Username</label>
-                <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+                <label for="email" class="form-label">Username</label>
+                <input type="email" class="form-control" id="email" name="email" aria-describedby="emailHelp">
               </div>
               <div class="mb-4">
-                <label for="exampleInputPassword1" class="form-label">Password</label>
-                <input type="password" class="form-control" id="exampleInputPassword1">
+                <label for="password" class="form-label">Password</label>
+                <input type="password" class="form-control" id="password" name="password">
               </div>
               <div class="d-flex align-items-center justify-content-between mb-4">
                 <div class="form-check">
                   <input class="form-check-input primary" type="checkbox" value="" id="flexCheckChecked" checked>
                   <label class="form-check-label text-dark" for="flexCheckChecked">
-                    Remeber this Device
+                    Remember this Device
                   </label>
                 </div>
                 <a class="text-primary fw-bold" href="./index.php">Forgot Password ?</a>
               </div>
-              <a href="./index.php" class="btn btn-primary w-100 py-8 fs-4 mb-4 rounded-2" id="craftmartconvert" style = "color: #ffffff; background-color: #bb7601; border-color: #bb7601;">Sign In</a>
+              <input type="submit" value="Sign In">
               <div class="d-flex align-items-center justify-content-center">
                 <p class="fs-4 mb-0 fw-bold">New to Modernize?</p>
-                <a class="text-primary fw-bold ms-2" id="craftmartconvert" href="./authentication-register.html">Create an account</a>
+                <a class="text-primary fw-bold ms-2" id="craftmartconvert" href="./authentication-register.php">Create an account</a>
               </div>
             </form>
               </div>
@@ -66,22 +92,7 @@
     </div>
   </div>
   <script src="../assets/libs/jquery/dist/jquery.min.js"></script>
-  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
-  <script>
-    const darkModeToggle = document.getElementById('darkModeToggle');
-    const body = document.body;
-    const darkModeWrapper = document.querySelector('.dark-mode-wrapper'); // Get the dark mode wrapper element
-  
-    darkModeToggle.addEventListener('change', () => {
-      if (darkModeToggle.checked) {
-        body.classList.add('dark-mode');
-        darkModeWrapper.classList.add('dark-mode'); // Add dark-mode class to the wrapper
-      } else {
-        body.classList.remove('dark-mode');
-        darkModeWrapper.classList.remove('dark-mode'); // Remove dark-mode class from the wrapper
-      }
-    });
-  </script>  
+  <script src="../assets/libs/bootstrap/dist/js/bootstrap.bundle.min.js"></script> 
 </body>
 
 </html>

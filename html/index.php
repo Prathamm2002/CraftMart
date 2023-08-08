@@ -1,3 +1,17 @@
+<?php
+// (A) JWT COOKIE NOT SET!
+if (!isset($_COOKIE["jwt"])) { header("Location: authentication-login.php"); exit(); }
+ 
+// (B) VERIFY JWT
+require "../database.php";
+$user = $_USER->validate($_COOKIE["jwt"]);
+if ($user===false || isset($_POST["logout"])) {
+  setcookie("jwt", null, -1);
+  header("Location: authentication-login.php.php");
+  exit();
+}
+?>
+
 <!doctype html>
 <html lang="en">
 
@@ -18,7 +32,7 @@
       <!-- Sidebar scroll-->
       <div>
         <div class="brand-logo d-flex align-items-center justify-content-between">
-          <a href="./index.html" class="text-nowrap logo-img">
+          <a href="./index.php" class="text-nowrap logo-img">
             <img src="../assets/images/logos/dark-logo.svg" width="180" alt="" />
           </a>
           <div class="close-btn d-xl-none d-block sidebartoggler cursor-pointer" id="sidebarCollapse">
@@ -33,7 +47,7 @@
               <span class="hide-menu">Home</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./index.html" aria-expanded="false">
+              <a class="sidebar-link" href="./index.php" aria-expanded="false">
                 <span>
                   <i class="ti ti-layout-dashboard"></i>
                 </span>
@@ -89,7 +103,7 @@
               <span class="hide-menu">AUTH</span>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./authentication-login.html" aria-expanded="false">
+              <a class="sidebar-link" href="./authentication-login.php" aria-expanded="false">
                 <span>
                   <i class="ti ti-login"></i>
                 </span>
@@ -97,7 +111,7 @@
               </a>
             </li>
             <li class="sidebar-item">
-              <a class="sidebar-link" href="./authentication-register.html" aria-expanded="false">
+              <a class="sidebar-link" href="./authentication-register.php" aria-expanded="false">
                 <span>
                   <i class="ti ti-user-plus"></i>
                 </span>
@@ -182,7 +196,7 @@
                       <i class="ti ti-list-check fs-6"></i>
                       <p class="mb-0 fs-3">My Task</p>
                     </a>
-                    <a href="./authentication-login.html" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
+                    <a href="logout.php" class="btn btn-outline-primary mx-3 mt-2 d-block">Logout</a>
                   </div>
                 </div>
               </li>

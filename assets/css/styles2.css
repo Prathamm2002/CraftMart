@@ -15,3 +15,18 @@
     background-color: #bb7601;
     border-color: #bb7601;
   }
+
+/* Add styles for dark mode */
+.dark-mode {
+    background-color: #222;
+    color: #fff;
+  }
+  
+  /* styles2.css */
+  /* Existing styles... */
+  
+  /* Add styles for dark mode */
+  .dark-mode .card {
+    background-color: #333;
+    color: #fff;
+  }
